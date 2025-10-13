@@ -1,0 +1,12 @@
+module.exports.authValidation = require('./auth.validation');
+module.exports.userValidation = require('./user.validation');
+module.exports.variableValidation = require('./variable.validation');
+module.exports.messageTemplateValidation = require('./message_template.validation');
+module.exports.roleValidation = require('./role.validation');
+module.exports.permissionValidation = require('./permission.validation');
+module.exports.countryValidation = require('./country.validation');
+module.exports.categoryValidation = require('./category.validation');
+module.exports.productValidation = require('./product.validation');
+module.exports.ratingValidation = require('./rating.validation');
+module.exports.billingValidation = require('./billing.validation');
+module.exports.feedbackValidation = require('./feedback.validation');

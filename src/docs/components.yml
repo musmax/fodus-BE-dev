@@ -1,0 +1,970 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+        phoneNumber:
+          type: string
+        profileImage:
+          type: string
+        languages:
+          $ref: '#/components/schemas/LanguageList'
+        countryId:
+          type: number
+        about:
+          type: string
+        title:
+          type: string
+      example:
+        id: 5ebac534954b54139806c112
+        email: admin@example.com
+        firstname: John
+        lastname: Doe
+        username: johndoe
+        phoneNumbers: '12345678'
+        profileImage: http://profileimage.jpg
+        language: English
+        countryId: 234
+        languageId: 1
+        about: I am a software developer
+        title: Software Developer
+
+    UserUpdateBody:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+        phoneNumber:
+          type: string
+        profileImage:
+          type: string
+        languageIds:
+          type: array
+          items:
+            type: number
+        countryId:
+          type: number
+        about:
+          type: string
+        title:
+          type: string
+      example:
+        firstName: John
+        lastName: Doe
+        username: johndoe
+        phoneNumber: '12345678'
+        profileImage: http://profileimage.jpg
+        languageIds: [1, 2]
+        countryId: 234
+        about: I am a software developer
+        title: Software Developer
+
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        expires:
+          type: string
+          format: date-time
+      example:
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg
+        expires: 2020-05-12T16:18:04.793Z
+
+    Variable:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 2343953
+        name: username
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        availableColors:
+          type: array
+          items:
+            type: string
+        categoriesId:
+          type: array
+          items:
+            type: number
+        productImages:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+        availableSizes:
+          type: array
+          items:
+            type: string
+        availableQuantity:
+          type: number
+        discount:
+          type: number
+      example:
+        name: Yello PAP(Ogi)
+        description: This is a product
+        price: 20000
+        availableColors: ["red", "yellow"]
+        availableSizes: ["S", "M", "L"]
+        section: edibles
+        isOutOfStock: false
+        quantity: 10
+        # availableQuantity: 10
+        # discount: 0
+        category: Computer Science
+        productImage: http://image.jpg
+        product_variation_prices:
+          - variety_name: 14kg
+            price: 10000
+          - variety_name: 20kg
+            price: 15000
+          - variety_name: 50kg
+            price: 30000
+
+
+    UpdateProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        availableColors:
+          type: array
+          items:
+            type: string
+        categoriesId:
+          type: array
+          items:
+            type: number
+        productImages:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+        availableSizes:
+          type: array
+          items:
+            type: string
+        availableQuantity:
+          type: number
+        discount:
+          type: number
+      example:
+        name: Product 1
+        price: 100000
+        description: This is a product
+        availableColors: ["red", "yellow"]
+        availableSizes: ["S", "M", "L"]
+        section: edible
+        quantity: 10
+        availableQuantity: 10
+        discount: 0
+        category: Computer Science
+        productImage: http://image.jpg
+        product_variation_prices:
+          - variety_name: 10kg
+            price: 10000
+          - variety_name: 20kg
+            price: 20000
+
+
+
+
+    MessageTemplate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        emailSubject:
+          type: string
+        emailBody:
+          type: string
+        smsSubject:
+          type: string
+        smsBody:
+          type: string
+      example:
+        title: Welcome Email
+        description: Welcome email to new users
+        emailSubject: Welcome to the platform
+        emailBody: Hello {{username}}, welcome to the platform
+        smsSubject: Welcome to the platform
+        smsBody: Hello {{username}}, welcome to the platform
+
+    Role:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+        permissions:
+          type: array
+          items:
+            type: integer
+            required: true
+      example:
+        title: Admin
+        description: All admin
+        permissions: [1, 2, 3]
+
+    Rating:
+      type: object
+      properties:
+        review:
+          type: string
+          required: true
+        rating:
+          type: string
+          required: true
+        productId:
+          type: string
+          required: true
+      example:
+        review: This is the product review
+        star: 5
+        productId: 12345
+        name: Musa Akande Ojo
+        location: NewCastle, UK
+
+
+    Order:
+      type: object
+      properties:
+        paymentMethod:
+          type: string
+          required: true
+        paymentObjects:
+          type: array
+          required: true
+          items:
+            type: object
+            properties:
+              productId:
+                type: integer
+                required: true
+              quantity:
+                type: number
+      example:
+        paymentMethod: paystack
+        deliveryAddress: 52, Shitta street.Dopemu,Agege.Lagos state.
+        currentUser:
+          firstName: John
+          lastName: Doe
+          email: admin@example.com
+          phoneNumber: '12345678'
+          cityTown: Agege
+          state: Lagos
+          postCode: '123478'
+        paymentObjects:
+          - productId: 1
+            quantity: 2
+          - productId: 2
+            quantity: 1
+
+
+    Permission:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        value:
+          type: string
+          required: true
+        groupName:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+      example:
+        name: Manage Users
+        value: users.manage
+        groupName: Users Permission
+        description: Permission to create, delete and modify users
+
+    Class:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        description:
+          type: string
+        schoolId:
+          type: number
+      example:
+        schoolId: 1
+        name: SS1A1
+        description: This class is  for students in the Science Stream, Year 1
+    UpdateClass:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        description:
+          type: string
+        schoolId:
+          type: number
+      example:
+        name: SS1c1
+        description: This class is  for students in the Science Stream, Year 1
+
+    Tracker:
+      type: object
+      properties:
+        deliveryNoteTracker:
+          type: string
+          required: true
+        isDelivered:
+          type: boolean
+      example:
+        deliveryNoteTracker: Your order will be delivered by 2nd of Jan, 2025. It is a payment before delivery
+        isDelivered: false
+
+    AssignStudent:
+      type: object
+      properties:
+        classId:
+          type: string
+          required: true
+        studentId:
+          type: string
+      example:
+        classId: 1
+        studentId: 1
+
+    Feedback:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+        content:
+          type: string
+      example:
+        email: musaakandeojo@gmail.com
+        content: I love this platform
+
+    ReAssignTeacher:
+      type: object
+      properties:
+        classId:
+          type: string
+          required: true
+        studentId:
+          type: string
+      example:
+        oldClassId: 1
+        newClassId: 1
+        teacherId: 1
+
+    MakeCaptain:
+      type: object
+      properties:
+        classId:
+          type: string
+          required: true
+        classCaptainId:
+          type: string
+      example:
+        classId: 1
+        classCaptainId: 1
+
+    StaffAttendance:
+      type: object
+      properties:
+        dateOfMarking:
+          type: string
+          format: date-time
+          required: true
+        classId:
+          type: number
+          required: true
+        teacherId:
+          type: number
+          required: true
+        standInMarker:
+          type: number
+          required: false
+        studentRecords:
+          type: array
+          items:
+            type: object
+            properties:
+              studentId:
+                type: number
+              isPresent:
+                type: boolean
+      example:
+        dateOfMarking: '2024-03-19T12:15:08'
+        sessionId: 1
+        termId: 1
+        staffRecords:
+          - staffId: 1
+            isPresent: false
+            arrivalTime: '12:15:08'
+          - staffId: 2
+            isPresent: true
+            arrivalTime: '12:15:08'
+
+    StaffAttendanceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StaffAttendance'
+
+    UpdateStaffAttendance:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        code:
+          type: string
+          required: true
+      example:
+        isPresent: false
+        arrivalTime: '08:15:08'
+
+    ClassAttendance:
+      type: object
+      properties:
+        dateOfMarking:
+          type: string
+          format: date-time
+          required: true
+        classId:
+          type: number
+          required: true
+        teacherId:
+          type: number
+          required: true
+        standInMarker:
+          type: number
+          required: false
+        studentRecords:
+          type: array
+          items:
+            type: object
+            properties:
+              studentId:
+                type: number
+              isPresent:
+                type: boolean
+      example:
+        dateOfMarking: '2024-03-19T12:15:08'
+        classId: 1
+        sessionId: 1
+        termId: 1
+        teacherId: 1
+        standInMarker: 1
+        studentRecords:
+          - studentId: 1
+            isPresent: false
+          - studentId: 2
+            isPresent: true
+    Class-AttendanceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ClassAttendance'
+
+    UpdateAttendance:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        code:
+          type: string
+          required: true
+      example:
+        isPresent: false
+
+    SchoolSession:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+        schoolId:
+          type: number
+          required: false
+
+      example:
+        title: '2020/2021  Academic Year'
+        description: 'The academic year for the 2020/2021 session.This session will run from Sep 2020 - Oct 2021'
+        schoolId: 3
+
+    SchoolSessionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/SchoolSession'
+
+    UpdateSchoolSession:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+      example:
+        title: '2020/2021  Academic Year'
+        description: 'The academic year for the 2020/2021 session.This session will run from Sep 2020 - Oct 2021.'
+
+    SchoolTerm:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          required: true
+        endDate:
+          type: string
+          format: date-time
+          required: true
+        title:
+          type: string
+        description:
+          type: string
+        sessionId:
+          type: number
+          required: true
+        schoolActivity:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              date:
+                type: string
+                format: date-time
+        schoolBreak:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              date:
+                type: string
+                format: date-time
+      example:
+        sessionId: 1
+        schoolId: 1
+        title: 'first term'
+        description: 'This is the first term of the academic year. It starts on January and ends in March 2021.'
+        startDate: '2024-03-19T12:15:08.000Z'
+        endDate: '2024-03-19T12:15:08.000Z'
+        schoolActivity:
+          - title: "Excursion"
+            description: "We are to go to Obudu cattle ranch for an excursion."
+            date: "2024-03-19T12:15:08.765Z"
+          - title: "Inspection"
+            description: "This is a routine inspection of the classroom."
+            date: "2024-03-19T12:15:08.765Z"
+          - title: "Teacher meeting"
+            description: "The teacher will meet with the students and their parents to discuss the semester results."
+            date: "2024-03-19T12:15:08.765Z"
+        schoolBreak:
+          - title: "Easter Break"
+            description: "This holiday marks the birth of Christ."
+            date: "2024-03-19T12:15:08.765Z"
+          - title: "Easter Break continues"
+            description: "This holiday marks the birth of Christ."
+            date: "2024-03-20T12:15:08.765Z"
+          - title: "Teacher Day"
+            description: "A day dedicated to teachers in our school, we appreciate your hard work and dedication."
+            date: "2024-03-19T12:15:08.765Z"
+
+    SchoolTermList:
+      type: array
+      items:
+        $ref: '#/components/schemas/SchoolTerm'
+
+    UpdateSchoolTerm:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+      example:
+        title: 'Spring Term'
+        description: 'The spring term begins on March 1st and ends on June 30th.'
+        startDate: '2024-03-01T00:00:00.000Z'
+        endDate: '2024-06-30T23:59:59.999Z'
+
+    TermActivity:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          required: true
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+        termId:
+          type: number
+          required: true
+      example:
+        date: '2024-03-19T12:15:08Z'
+        termId: 1
+        title: 'Excursion II'
+        description: 'We are to visit Olumo rock in Abeokuta.'
+
+    TermActivityList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TermActivity'
+
+    UpdateTermActivity:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+          format: date-time
+        status:
+          type: string
+      example:
+        title: 'Visitation to Government House, Agodi'
+        description: "This is a brief of the activity."
+        date: '2024-06-17T12:15:08Z'
+        status: 'postponed'
+
+    TermBreak:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          required: true
+        title:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+        termId:
+          type: string
+          required: true
+      example:
+        date: '2024-03-19T12:15:08Z'
+        termId: 1
+        title: 'Maolud Nabiyy'
+        description: 'This is a global holiday observed by Muslims.'
+
+    TermBreakList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TermBreak'
+
+    UpdateTermBreak:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+          format: date-time
+        status:
+          type: string
+      example:
+        title: 'Eid -al-kabir'
+        description: "This is a globally observed holiday by Muslims to mark the big festival."
+        date: '2024-06-17T12:15:08Z'
+        status: 'observed'
+
+    TestInvitation:
+      type: object
+      properties:
+        messageId:
+          type: number
+          required: true
+        testId:
+          type: number
+          required: true
+        expiresIn:
+          type: number
+          required: true
+        expireType:
+          type: string
+          required: true
+        file:
+          type: string
+          required: true
+
+    School:
+      type: object
+      properties:
+        schoolName:
+          type: string
+          required: true
+        address:
+          type: string
+          required: true
+        history:
+          type: string
+        logo:
+          type: string
+        numberOfBranches:
+          type: string
+        description:
+          type: string
+        facilities:
+          type: array
+          items:
+            properties:
+            facilities:
+              type: string
+        achievements:
+          type: array
+          items:
+            properties:
+            facilities:
+              type: string
+        officialHandles:
+          type: array
+          items:
+            properties:
+            facilities:
+              type: string
+        phoneNumbers:
+          type: array
+          items:
+            properties:
+            facilities:
+              type: string
+        accredited:
+          type: string
+        numberOfStudents:
+          type: number
+          required: true
+        numberOfEmployees:
+          type: number
+        websites:
+          type: string
+      example:
+        schoolName: Baptist High School
+        address: 12, Oba Osuntokun.Bodija
+        schoolLogo: 'https://i.stack.imgur.com/xHwwG.png?s=46a35'
+        numberOfBranches: 10
+        accredited: false
+        description: 'This is a public high school in Lagos State.'
+        officialHandles:
+          ['https:facebook.com/BHSL', 'https:twitter.com/BHSL', 'https:instagram.com/BHSL', 'https:youtube.com/BHSL']
+        schoolWebsites: ['https:BHSL/opebis', 'https:twitter.com/BHSL']
+        schoolPhoneNumbers: ['+23409087654321', '+23409087604321', '+234090876544321', '+234090814654321']
+
+    SchoolList:
+      type: array
+      items:
+        $ref: '#/components/schemas/School'
+
+    Country:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+        code:
+          type: string
+          required: true
+      example:
+        name: Nigeria
+        code: NG
+
+    CountryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Country'
+
+    Language:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+      example:
+        name: English
+
+    Upload:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            url:
+              type: string
+      example:
+        success: true
+        message: File uploaded successfully
+        data:
+          url: http://image.jpg
+
+    LanguageList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Language'
+
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        parentId:
+          type: number
+      example:
+        name: Computer Science
+        icon: http://image.jpg
+        description: This is a category for computer science
+
+    CategoryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'
+
+    AuthTokens:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/Token'
+        refresh:
+          $ref: '#/components/schemas/Token'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+
+  responses:
+    DuplicateEmail:
+      description: Email already taken
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Email already taken
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not found
+    EmailUnverified:
+      description: Email not verified
+      content:
+        application/json:
+          schema:
+            code: number
+            isVerified: boolean
+            email: string
+            message: string
+          example:
+            code: 401
+            isVerified: false
+            email: newuser@example.com
+            message: 'Please verify your email to login. We have sent you a verification email.'
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
