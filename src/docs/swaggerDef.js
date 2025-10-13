@@ -21,6 +21,9 @@ const swaggerDef = {
     {
       url: `https://fodus-api-dev.onrender.com/v1`,
     },
+    {
+      url: `https://fodus-be-dev.onrender.com/v1`,
+    },
     // {
     //   url: `https://mdbstorebe-express.onrender.com/v1`,
     // },
