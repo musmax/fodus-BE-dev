@@ -12,6 +12,7 @@ const { fetchProductById } = require('./product.service');
 const { Wallet } = require('../models/wallet.model');
 const { sendConfirmationEmail, sendOrderConfirmationEmail, sendOrderNotificationToOwner } = require('./email.service');
 const emailQueue = require('./emailQueue.service');
+const { Product } = require('../models/product.model');
 
 /**
  * @typedef {Object} PaymentObject
@@ -38,6 +39,22 @@ const findWallet = async (userId) => {
  */
 const initializeOrderTransaction = async (transactionBody) => {
   const { paymentMethod, paymentObjects, deliveryAddress, currentUser } = transactionBody;
+  // lets see if one or any of the products has quantity equal o
+  if (!Array.isArray(paymentObjects) || paymentObjects.length === 0) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Payment objects must be a non-empty array');
+  }
+  for (const item of paymentObjects) {
+    const product = await Product.findByPk(item.productId); // or findOne({_id: ...})
+
+    if (!product) {
+      throw new ApiError(httpStatus.BAD_REQUEST, `Product with ID ${item.productId} not found`);
+    }
+
+    if (product.stock < item.quantity) {
+      throw new ApiError(httpStatus.BAD_REQUEST, `${product.name} is out of stock or insufficient quantity`);
+    }
+  }
+
   const orderReference = crypto.randomBytes(5).toString('hex');
   // console.log(orderReference);
   // lets get the product total amount
@@ -238,7 +255,7 @@ const initializeOrderTransaction = async (transactionBody) => {
       type: 'order_confirmation',
       data: completeOrder
     });
-    
+
     emailQueue.add({
       type: 'owner_notification',
       data: completeOrder
@@ -256,6 +273,7 @@ const initializeOrderTransaction = async (transactionBody) => {
       message: 'kindly make a direct payment to fodus bank account',
     };
   }
+
 }
 
 const verifyStripeOrderTransaction = async (paymentIntentId) => {
@@ -304,7 +322,7 @@ const verifyStripeOrderTransaction = async (paymentIntentId) => {
       type: 'order_confirmation',
       data: order
     });
-    
+
     emailQueue.add({
       type: 'owner_notification',
       data: order

@@ -4,6 +4,7 @@ const logger = require('./config/logger');
 const { sequelize } = require('./config/database');
 const { association } = require('./models');
 const { initializeDatabase } = require('./utils/MockData');
+const { Product } = require('./models/product.model');
 
 let server;
 
@@ -15,9 +16,9 @@ try {
   association();
 
   // sync database
-  // User.sync({
-  //   alter: true,
-  // });
+  Product.sync({
+    alter: true,
+  });
 
   // intit DB
   sequelize

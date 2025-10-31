@@ -12,7 +12,7 @@ const Product = sequelize.define('product', {
     type: DataTypes.STRING,
   },
   section: {
-    type: DataTypes.ENUM('fashion', 'edibles'),
+    type: DataTypes.ENUM('fashion', 'edibles', 'buka'),
   },
   category: {
     type: DataTypes.STRING,

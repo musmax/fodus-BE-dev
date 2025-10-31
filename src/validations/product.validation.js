@@ -8,7 +8,7 @@ const createProduct = {
     availableSizes: Joi.array().items(Joi.string()),
     category: Joi.string().required(),
     productImage: Joi.string().required(),
-    section: Joi.string().valid('fashion', 'edibles').required(),
+    section: Joi.string().valid('fashion', 'edibles', 'buka').required(),
     availableQuantity: Joi.number(),
     discount: Joi.number(),
     quantity: Joi.number().default(1),
