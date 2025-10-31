@@ -33,7 +33,7 @@ const getProducts = {
     category: Joi.string(),
     availableSizes: Joi.string(),
     categoryId: Joi.number(),
-    section: Joi.string().valid('fashion', 'edibles'),
+    section: Joi.string().valid('fashion', 'edibles', 'buka'),
     isOutOfStock: Joi.boolean(),
     page: Joi.number().integer().min(1).default(1),
     limit: Joi.number().integer(),
