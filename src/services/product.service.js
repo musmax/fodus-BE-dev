@@ -37,12 +37,18 @@ const fetchAllProducts = async (filter, options, user = null) => {
     let whereCondition = { hasBeenDeleted: false };
     
     // If user is not authenticated (public access), hide out-of-stock products
+    // EXCEPT for 'buka' section products (preorder items) which should always show
     if (!user) {
       whereCondition = {
         ...whereCondition,
-        [Op.and]: [
-          { quantity: { [Op.gt]: 0 } }, 
-          { isOutOfStock: false }
+        [Op.or]: [
+          {
+            [Op.and]: [
+              { quantity: { [Op.gt]: 0 } }, 
+              { isOutOfStock: false }
+            ]
+          },
+          { section: 'buka' }
         ]
       };
     }
