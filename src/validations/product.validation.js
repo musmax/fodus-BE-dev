@@ -9,7 +9,7 @@ const createProduct = {
     category: Joi.string().required(),
     productImage: Joi.string().required(),
     section: Joi.string().valid('fashion', 'edibles', 'buka').required(),
-    availableQuantity: Joi.number(),
+    availableQuantity: Joi.number(), // This is the total quantity of the product
     discount: Joi.number(),
     quantity: Joi.number().default(1),
     price: Joi.number().required(),
