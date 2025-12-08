@@ -38,7 +38,7 @@ const findWallet = async (userId) => {
  * @returns {Promise<PaymentObject>}
  */
 const initializeOrderTransaction = async (transactionBody) => {
-  const { paymentMethod, paymentObjects, deliveryAddress, currentUser } = transactionBody;
+  const { paymentMethod, paymentObjects, deliveryAddress, currentUser, ...others } = transactionBody;
   // lets see if one or any of the products has quantity equal o
   if (!Array.isArray(paymentObjects) || paymentObjects.length === 0) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Payment objects must be a non-empty array');
@@ -82,7 +82,8 @@ const initializeOrderTransaction = async (transactionBody) => {
       amount: productTotalAmount,
       reference: orderReference,
       payment_intent_id: payment.data.payment_intent_id,
-      deliveryAddress
+      deliveryAddress,
+      order_notes: currentUser.order_notes,
     });
     // lets associate the products to the order
     await Promise.all(
