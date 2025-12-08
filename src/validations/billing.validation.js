@@ -13,6 +13,7 @@ const createOrder = {
       postCode: Joi.string().required(),
       state: Joi.string(),
       country: Joi.string(),
+      order_notes: Joi.string(),
     }),
     paymentObjects: Joi.array()
       .items(
