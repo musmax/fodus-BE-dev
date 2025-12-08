@@ -294,6 +294,7 @@ components:
           cityTown: Agege
           state: Lagos
           postCode: '123478'
+          order_notes: This is a test order
         paymentObjects:
           - productId: 1
             quantity: 2

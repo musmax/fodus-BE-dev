@@ -5,6 +5,8 @@ const { sequelize } = require('./config/database');
 const { association } = require('./models');
 const { initializeDatabase } = require('./utils/MockData');
 const { Product } = require('./models/product.model');
+const { initializeBackupCron, runBackupNow } = require('./cron/backup.cron');
+const { Order } = require('./models/order.model');
 
 let server;
 
@@ -36,6 +38,22 @@ try {
           .catch((error) => {
             logger.error('Error initializing database:', error);
           });
+        
+        // Initialize backup cron job (runs every Tuesday at 2:00 AM)
+        // try {
+        //   // initializeBackupCron();
+          
+        //   // Run backup immediately for testing (remove this in production)
+        //   runBackupNow()
+        //     .then((backupPath) => {
+        //       logger.info(`Initial test backup completed: ${backupPath}`.green);
+        //     })
+        //     .catch((error) => {
+        //       logger.error('Initial test backup failed:', error);
+        //     });
+        // } catch (error) {
+        //   logger.error('Error initializing backup cron job:', error);
+        // }
       }
     })
     .catch((error) => {

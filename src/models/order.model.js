@@ -43,6 +43,9 @@ const Order = sequelize.define('order', {
   country: {
     type: DataTypes.STRING,
   },
+  order_notes: {
+    type: DataTypes.TEXT,
+  },
   payment_intent_id: {
     type: DataTypes.STRING,
   },

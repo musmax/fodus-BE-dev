@@ -9,7 +9,7 @@ const Product = sequelize.define('product', {
     trim: true,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
   },
   section: {
     type: DataTypes.ENUM('fashion', 'edibles', 'buka'),
@@ -48,7 +48,8 @@ const Product = sequelize.define('product', {
   },
   quantity: {
     type: DataTypes.INTEGER,
-  }
+  },
+  
 });
 
 sequelizePaginate.paginate(Product);
